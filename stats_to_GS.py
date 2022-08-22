@@ -1,34 +1,33 @@
-import glob
-import os
-import csv
+from glob import glob
+from os.path import abspath, getctime
+from csv import reader
 from time import sleep
+from typing import NoReturn
+
+from quickstart import update_sheet
 
 
 def get_latest_file() -> str:
-    os_file = os.path.abspath(__file__)
+    os_file = abspath(__file__)
     size: int = len(os_file)
     os_file = os_file[: size - 29]
-    list_of_files = glob.glob(f"{os_file}Overwatch/Workshop/*")
-    latest_file: str = max(list_of_files, key=os.path.getctime)
+    list_of_files = glob(f"{os_file}Overwatch/Workshop/*")
+    latest_file: str = max(list_of_files, key=getctime)
     return latest_file
 
 
-def read_csv_file(file_to_read: str):
+def read_csv_file(file_to_read: str) -> list:
+    file_length = file_len(file_to_read)
+    row_data: list = []
+
     with open(file_to_read) as csv_file:
-        csv_reader = csv.reader(csv_file, delimiter=",")
-        line_count: int = 0
-        for row in csv_reader:
-            print(row)
-            line_count += 1
-            if line_count == 12:
-                break
-
-
-def remove_lines(file_to_read: str) -> None:
-    with open(file_to_read) as old, open("newfile.txt", "w") as new:
-        lines = old.readlines()
-        new.writelines(lines[12:])
-    os.replace("newfile.txt", file_to_read)
+        csv_reader = reader(csv_file, delimiter=",")
+        for numbers in range(file_length - 11, file_length + 1):
+            for rows in csv_reader:
+                if csv_reader.line_num == numbers:
+                    row_data.append(rows)
+                    break
+    return row_data
 
 
 def file_len(file_to_read: str) -> int:
@@ -37,14 +36,19 @@ def file_len(file_to_read: str) -> int:
         return lines
 
 
-if __name__ == "__main__":
-    file = get_latest_file()
+def main() -> NoReturn:
+    file: str = get_latest_file()
     while True:
         if 12 <= file_len(file):
-            read_csv_file(file)
-            remove_lines(file)
+            update_sheet(read_csv_file(file))
         else:
             print("File Too Short")
-        file = get_latest_file()
+        new_file: str = get_latest_file()
+        if file != new_file:
+            file = new_file
         print("Running")
-        sleep(1)
+        sleep(2)
+
+
+if __name__ == "__main__":
+    main()
