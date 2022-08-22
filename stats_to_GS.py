@@ -4,7 +4,7 @@ from csv import reader
 from time import sleep
 from typing import NoReturn
 
-from quickstart import update_sheet
+from google_sheets_push import update_sheet
 
 
 def get_latest_file() -> str:
