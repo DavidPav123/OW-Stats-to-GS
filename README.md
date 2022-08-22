@@ -13,3 +13,6 @@ Usage instructions:
 5. Start a game in the overwatch workshop using the workshop code E8KVF
 
 6. Data will start being logged once players are let out of the ships
+
+
+*Make sure to turn on "Enable workshop inspector log file" in the Overwatch settings under gameplay -> miscellaneous* 
