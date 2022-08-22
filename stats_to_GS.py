@@ -24,18 +24,27 @@ def read_csv_file(file_to_read: str):
                 break
 
 
-def remove_lines(file_to_read: str):
+def remove_lines(file_to_read: str) -> None:
     with open(file_to_read) as old, open("newfile.txt", "w") as new:
         lines = old.readlines()
         new.writelines(lines[12:])
     os.replace("newfile.txt", file_to_read)
 
 
+def file_len(file_to_read: str) -> int:
+    with open(file_to_read) as fp:
+        lines: int = len(fp.readlines())
+        return lines
+
+
 if __name__ == "__main__":
     file = get_latest_file()
     while True:
-        read_csv_file(file)
-        remove_lines(file)
+        if 12 <= file_len(file):
+            read_csv_file(file)
+            remove_lines(file)
+        else:
+            print("File Too Short")
         file = get_latest_file()
         print("Running")
         sleep(1)
