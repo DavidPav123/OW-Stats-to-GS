@@ -11,6 +11,7 @@ def get_latest_file() -> str:
     os_file = abspath(__file__)
     size: int = len(os_file)
     os_file = os_file[: size - 29]
+    print(os_file)
     list_of_files = glob(f"{os_file}Overwatch/Workshop/*")
     latest_file: str = max(list_of_files, key=getctime)
     return latest_file
@@ -18,8 +19,11 @@ def get_latest_file() -> str:
 
 def read_csv_file(file_to_read: str) -> list:
     file_length = file_len(file_to_read)
-    row_data: list[list] = [["-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-",]]
+    row_data: list[list] = [
+    ]
 
+    # Fix luc and torb
+    # Make both teams go DPS -> Tank -> Healer
     with open(file_to_read) as csv_file:
         csv_reader = reader(csv_file, delimiter=",")
         for numbers in range(file_length - 11, file_length + 1):
