@@ -8,7 +8,7 @@ Usage instructions:
 
 3. Run the program, you will be prompted to login and once logged in the program will generate a token.json file
 
-4. Run the program again to start loggin data
+4. Run the program again to start logging data
 
 5. Start a game in the overwatch workshop using the workshop code E8KVF
 
