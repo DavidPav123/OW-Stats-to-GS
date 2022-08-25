@@ -1,16 +1,14 @@
 from glob import glob
-from os.path import abspath, getctime
+from os.path import getctime, expanduser
 from csv import reader
 from time import sleep
 from typing import NoReturn
 
 from google_sheets_push import update_sheet
 
+
 def get_latest_file() -> str:
-    os_file: str = abspath(__file__)
-    size: int = len(os_file)
-    os_file = os_file[: size - 29]
-    list_of_files: list[str] = glob(f"{os_file}Overwatch/Workshop/*")
+    list_of_files: list[str] = glob(f"{expanduser('~/Documents')}/Overwatch/Workshop/*")
     latest_file: str = max(list_of_files, key=getctime)
     return latest_file
 
