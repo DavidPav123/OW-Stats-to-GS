@@ -18,15 +18,44 @@ def get_latest_file() -> str:
 
 def read_csv_file(file_to_read: str) -> list:
     file_length = file_len(file_to_read)
-    row_data: list = []
+    row_data: list[list] = [["-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-",]]
 
     with open(file_to_read) as csv_file:
         csv_reader = reader(csv_file, delimiter=",")
         for numbers in range(file_length - 11, file_length + 1):
             for rows in csv_reader:
                 if csv_reader.line_num == numbers:
-                    row_data.append(rows)
+                    rows.pop(0)
+                    if rows[len(rows) - 1] == "Team 1":
+                        row_data.insert(0, rows)
+                    else:
+                        row_data.append(rows)
                     break
+
+    row_data.insert(
+        0,
+        [
+            "Player Name",
+            "Hero Name",
+            "Damage Dealt",
+            "Barrier Damage",
+            "Damage Blocked",
+            "Damage Taken",
+            "Deaths",
+            "Elims",
+            "Final Blows",
+            "Env Deaths",
+            "Env Kills",
+            "Healing",
+            "Obj Kills",
+            "solo kills",
+            "Ults Earned",
+            "Ults Used",
+            "Healing Recived",
+            "Team",
+        ],
+    )
+
     return row_data
 
 

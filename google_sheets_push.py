@@ -13,10 +13,10 @@ from googleapiclient import discovery
 SCOPES: list[str] = ["https://www.googleapis.com/auth/spreadsheets"]
 
 # The ID and range of a sample spreadsheet.
-SPREADSHEET_ID = "1_s8kTUCKG7wWY43Fa24knmBPAW-iV0uoNBLLUXUxLA0"
-RANGE_NAME = "A2:Z26"
+SPREADSHEET_ID: str = "1_s8kTUCKG7wWY43Fa24knmBPAW-iV0uoNBLLUXUxLA0"
+RANGE_NAME: str = "A1:Z26"
 # How the input data should be interpreted.
-VALUE_INPUT_OPTION = "USER_ENTERED"
+VALUE_INPUT_OPTION: str = "USER_ENTERED"
 
 
 def update_sheet(values_to_update) -> None:
@@ -42,7 +42,7 @@ def update_sheet(values_to_update) -> None:
     try:
         service = discovery.build("sheets", "v4", credentials=creds)
 
-        value_range_body = {"values": values_to_update}
+        value_range_body: dict = {"values": values_to_update}
 
         request = (
             service.spreadsheets()
