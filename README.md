@@ -4,9 +4,7 @@ Usage instructions:
 
 1. Download files to Documents folder
 
-   1-1. If downloading the ZIP file, make sure to delete the master at the end of the extracted folders name i.e. OW-Stats-to-GS-master -> OW-Stats-to-GS
-
-   1-2. If not already downloaded and installed, install the google sheets python api by running the command in the terminal: 
+   1-1. If not already downloaded and installed, install the google sheets python api by running the command in the terminal: 
         
         pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib 
         
