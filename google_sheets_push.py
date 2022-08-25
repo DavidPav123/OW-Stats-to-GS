@@ -14,7 +14,7 @@ SCOPES: list[str] = ["https://www.googleapis.com/auth/spreadsheets"]
 
 # The ID and range of a sample spreadsheet.
 SPREADSHEET_ID: str = "1_s8kTUCKG7wWY43Fa24knmBPAW-iV0uoNBLLUXUxLA0"
-RANGE_NAME: str = "A1:Z26"
+RANGE_NAME: str = "A1:R14"
 # How the input data should be interpreted.
 VALUE_INPUT_OPTION: str = "USER_ENTERED"
 

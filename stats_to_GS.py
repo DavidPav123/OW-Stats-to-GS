@@ -6,32 +6,35 @@ from typing import NoReturn
 
 from google_sheets_push import update_sheet
 
-
 def get_latest_file() -> str:
-    os_file = abspath(__file__)
+    os_file: str = abspath(__file__)
     size: int = len(os_file)
     os_file = os_file[: size - 29]
-    list_of_files = glob(f"{os_file}Overwatch/Workshop/*")
+    list_of_files: list[str] = glob(f"{os_file}Overwatch/Workshop/*")
     latest_file: str = max(list_of_files, key=getctime)
     return latest_file
 
 
 def read_csv_file(file_to_read: str) -> list:
-    file_length = file_len(file_to_read)
     row_data: list[list] = []
+    t1: list = []
+    t2: list = []
+    file_length: int = file_len(file_to_read)
 
-    # Fix luc and torb
-    # Make both teams go DPS -> Tank -> Healer
     with open(file_to_read) as csv_file:
         csv_reader = reader(csv_file, delimiter=",")
         for numbers in range(file_length - 11, file_length + 1):
             for rows in csv_reader:
                 if csv_reader.line_num == numbers:
                     rows.pop(0)
+                    if rows[1] == "LÃºcio":
+                        rows[1] = "Lucio"
+                    elif rows[1] == "TorbjÃ¶rn":
+                        rows[1] = "Torbjorn"
                     if rows[len(rows) - 1] == "Team 1":
-                        row_data.insert(0, rows)
+                        t1.append(rows)
                     else:
-                        row_data.append(rows)
+                        t2.append(rows)
                     break
 
     row_data.insert(
@@ -57,7 +60,10 @@ def read_csv_file(file_to_read: str) -> list:
             "Team",
         ],
     )
-
+    for t1_rows in t1:
+        row_data.append(t1_rows)
+    for t2_rows in t2:
+        row_data.append(t2_rows)
     return row_data
 
 
@@ -77,7 +83,6 @@ def main() -> NoReturn:
         new_file: str = get_latest_file()
         if file != new_file:
             file = new_file
-        print("Running")
         sleep(2)
 
 
