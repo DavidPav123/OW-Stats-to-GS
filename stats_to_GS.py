@@ -7,21 +7,21 @@ from typing import NoReturn
 
 from google_sheets_push import update_sheet
 
-#List of pages for google sheets to write to
+# List of pages for google sheets to write to
 pages_to_update: str = [
-    "Placeholder", #DO NOT DELETE
-    "Placeholder2", #DO NOT DELETE
-    "Sheet1", #Change to page 1 
-    "Sheet2", #Change to page 2
-    "Sheet3", #Change to page 3  
-    "Sheet4", #Change to page 4
-    "Sheet5", #Chnage to page 5
+    "Placeholder",  # DO NOT DELETE
+    "Placeholder2",  # DO NOT DELETE
+    "Sheet1",  # Change to page 1
+    "Sheet2",  # Change to page 2
+    "Sheet3",  # Change to page 3
+    "Sheet4",  # Change to page 4
+    "Sheet5",  # Chnage to page 5
 ]
-#Variable for switching pages when new file is detected
+# Variable for switching pages when new file is detected
 current_page: int = 0
 # Range to update in sheets change infor after
 range_name: str = f"{pages_to_update[current_page]}!A1:Z26"
-#Name of the current map
+# Name of the current map
 cur_map: str = ""
 
 
@@ -83,7 +83,7 @@ def read_csv_file(file_to_read: str) -> list:
     return row_data
 
 
-def check_file_change(file_to_read: str):
+def check_file_change(file_to_read: str) -> list[str]:
     with open(file_to_read) as csv_file:
         csv_reader = reader(csv_file, delimiter=",")
         header: list[str] = next(csv_reader)
@@ -96,7 +96,7 @@ def file_len(file_to_read: str) -> int:
         return lines
 
 
-def update_page(page_list: list, current_page: int):
+def update_page(page_list: list, current_page: int) -> str:
     return f"{page_list[current_page]}!A1:Z26"
 
 
