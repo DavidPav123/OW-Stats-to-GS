@@ -9,17 +9,16 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from googleapiclient import discovery
 
-# If modifying these scopes, delete the file token.json.
+# Scopes the program is allowed to access
 SCOPES: list[str] = ["https://www.googleapis.com/auth/spreadsheets"]
 
-# The ID and range of a sample spreadsheet.
+# ID of spreadsheet to modify
 SPREADSHEET_ID: str = "1_s8kTUCKG7wWY43Fa24knmBPAW-iV0uoNBLLUXUxLA0"
-RANGE_NAME: str = "A1:R14"
 # How the input data should be interpreted.
 VALUE_INPUT_OPTION: str = "USER_ENTERED"
 
 
-def update_sheet(values_to_update) -> None:
+def update_sheet(values_to_update, range_to_update) -> None:
     creds: Credentials = None
     # The file token.json stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
@@ -49,14 +48,15 @@ def update_sheet(values_to_update) -> None:
             .values()
             .update(
                 spreadsheetId=SPREADSHEET_ID,
-                range=RANGE_NAME,
+                range=range_to_update,
                 valueInputOption=VALUE_INPUT_OPTION,
                 body=value_range_body,
             )
         )
         response = request.execute()
 
-        # TODO: Change code below to process the `response` dict:
         print(response)
     except HttpError as err:
-        print(err)
+        #uncomment if not working for some reason to see actual error
+        #print(err)
+        print("Waiting for game to start")

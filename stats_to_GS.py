@@ -2,9 +2,25 @@ from glob import glob
 from os.path import getctime, expanduser
 from csv import reader
 from time import sleep
+from turtle import update
 from typing import NoReturn
 
 from google_sheets_push import update_sheet
+
+
+pages_to_update: str = [
+    "Placeholder",
+    "Placeholder2",
+    "Sheet1",
+    "Sheet2",
+    "Sheet3",
+    "Sheet4",
+    "Sheet5",
+]
+current_page: int = 0
+# Range to update
+range_name: str = f"{pages_to_update[current_page]}!A1:Z26"
+cur_map = ""
 
 
 def get_latest_file() -> str:
@@ -65,24 +81,45 @@ def read_csv_file(file_to_read: str) -> list:
     return row_data
 
 
+def check_file_change(file_to_read: str):
+    with open(file_to_read) as csv_file:
+        csv_reader = reader(csv_file, delimiter=",")
+        header: list[str] = next(csv_reader)
+        return header
+
+
 def file_len(file_to_read: str) -> int:
     with open(file_to_read) as fp:
         lines: int = len(fp.readlines())
         return lines
 
 
-def main() -> NoReturn:
-    file: str = get_latest_file()
-    while True:
-        if 12 <= file_len(file):
-            update_sheet(read_csv_file(file))
-        else:
-            print("File Too Short")
-        new_file: str = get_latest_file()
-        if file != new_file:
-            file = new_file
-        sleep(2)
+def update_page(page_list: list, current_page):
+    return f"{page_list[current_page]}!A1:Z26"
 
 
 if __name__ == "__main__":
-    main()
+    file: str = get_latest_file()
+
+    cur_map_temp: list[str] = check_file_change(file)
+
+    while True:
+        cur_map_temp: list[str] = check_file_change(file)
+
+        if cur_map != cur_map_temp:
+            cur_map = cur_map_temp
+            current_page += 1
+            range_name = update_page(pages_to_update, current_page)
+
+        if 12 <= file_len(file):
+            update_sheet(read_csv_file(file), range_name)
+
+        else:
+            print("Waiting for data")
+
+        new_file: str = get_latest_file()
+
+        if file != new_file:
+            file = new_file
+
+        sleep(2)
