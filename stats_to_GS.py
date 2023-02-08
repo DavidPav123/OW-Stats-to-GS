@@ -26,7 +26,9 @@ cur_map: str = ""
 
 
 def get_latest_file() -> str:
-    list_of_files: list[str] = glob(f"{expanduser('~/Documents')}/Overwatch/Workshop/*")
+    #Use for normal douments folder
+    #list_of_files: list[str] = glob(f"{expanduser('~/Documents')}/Overwatch/Workshop/*")
+    list_of_files: list[str] = glob(f"{expanduser('~/')}/OneDrive/Documents/Overwatch/Workshop/*")
     latest_file: str = max(list_of_files, key=getctime)
     return latest_file
 
