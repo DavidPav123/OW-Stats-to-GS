@@ -41,7 +41,7 @@ def read_csv_file(file_to_read: str) -> list:
 
     with open(file_to_read) as csv_file:
         csv_reader = reader(csv_file, delimiter=",")
-        for numbers in range(file_length - 11, file_length + 1):
+        for numbers in range(file_length - 9, file_length + 1):
             for rows in csv_reader:
                 if csv_reader.line_num == numbers:
                     rows.pop(0)
