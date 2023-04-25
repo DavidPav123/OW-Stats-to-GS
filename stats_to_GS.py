@@ -49,7 +49,7 @@ def read_csv_file(file_to_read: str) -> list:
                     elif rows[1] == "TorbjÃ¶rn":
                         rows[1] = "Torbjorn"
                     if rows[len(rows) - 1] == "Team 1":
-                        t1.append(rows)
+                        t1.insert(0, rows)
                     else:
                         t2.append(rows)
                     break
