@@ -2,8 +2,7 @@ from glob import glob
 from os.path import getctime, expanduser
 from csv import reader
 from time import sleep
-from turtle import update
-from typing import NoReturn
+import csv
 
 from google_sheets_push import update_sheet
 
@@ -101,6 +100,10 @@ def file_len(file_to_read: str) -> int:
 def update_page(page_list: list, current_page: int) -> str:
     return f"{page_list[current_page]}!A1:Z26"
 
+def export_to_csv(rows,file_name):
+    with open(f'CSVs/{file_name}', 'w') as f:
+        write = csv.writer(f, delimiter=',', lineterminator="\n")
+        write.writerows(rows)
 
 if __name__ == "__main__":
     file: str = get_latest_file()
@@ -116,7 +119,9 @@ if __name__ == "__main__":
             range_name = update_page(pages_to_update, current_page)
 
         if 12 <= file_len(file):
-            update_sheet(read_csv_file(file), range_name)
+            stats = read_csv_file(file)
+            export_to_csv(stats, range_name)
+            update_sheet(stats, range_name)
 
         else:
             print("Waiting for data")
