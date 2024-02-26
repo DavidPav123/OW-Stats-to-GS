@@ -1,7 +1,8 @@
+## Depreciated, replaced by: https://github.com/DavidPav123/Overwatch-to-Goggle-Sheets-and-CSV.git
+
 # OW-Stats-to-GS
 
 Usage instructions:
-
 1. Download files to Documents folder
 
    1-1. If not already downloaded and installed, install the google sheets python api by running the command in the terminal: 
